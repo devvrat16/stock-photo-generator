@@ -1,4 +1,4 @@
-# 🎨 AI Photo Generator
+# AI Photo Generator
 
 A full-stack AI-powered photo generator built with **Spring Boot** and vanilla **HTML/CSS/JavaScript**. Generates real AI images from text prompts using **Pollinations.ai** — completely free, no API key needed.
 
@@ -8,7 +8,7 @@ A full-stack AI-powered photo generator built with **Spring Boot** and vanilla *
 
 ---
 
-## ✨ Features
+## Features
 
 - **Real AI Image Generation** — Generate images from text using Pollinations.ai (free, no API key)
 - **Responsive Gallery** — Card-based grid layout, works on all devices
@@ -23,7 +23,7 @@ A full-stack AI-powered photo generator built with **Spring Boot** and vanilla *
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - **Java 17+** (JDK)
@@ -42,11 +42,11 @@ Navigate to **http://localhost:8081**
 ### 3. Generate Images
 Type a prompt like *"A golden retriever playing in autumn leaves"* and click **Generate Image**!
 
-> ✅ **No API key needed** — uses Pollinations.ai (free)
+> **No API key needed** — uses Pollinations.ai (free)
 
 ---
 
-## 🐳 Docker Deployment
+## Docker Deployment
 
 ```bash
 # Using Docker Compose
@@ -59,7 +59,7 @@ docker run -p 8081:8081 -v ./generated-images:/app/generated-images ai-photo-gen
 
 ---
 
-## 📡 API Reference
+## API Reference
 
 **Base URL:** `http://localhost:8081/api/images`
 
@@ -106,7 +106,7 @@ curl -X POST http://localhost:8081/api/images/generate \
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Run all tests
@@ -118,7 +118,7 @@ mvn test -Dtest=ImageControllerTest
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 stock-photo-generator/
@@ -165,7 +165,7 @@ stock-photo-generator/
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### application.yml
 ```yaml
@@ -188,7 +188,7 @@ app:
 
 ---
 
-## 🛡️ Security
+## Security
 
 - **JWT Authentication** — Token-based API security
 - **Rate Limiting** — 30 requests/minute per IP
@@ -197,7 +197,7 @@ app:
 
 ---
 
-## 📄 License
+## License
 
 MIT License
 # stock-photo-generator
