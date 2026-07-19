@@ -2,10 +2,6 @@
 
 A full-stack AI-powered photo generator built with **Spring Boot** and vanilla **HTML/CSS/JavaScript**. Generates real AI images from text prompts using **Pollinations.ai** — completely free, no API key needed.
 
-![Java](https://img.shields.io/badge/Java-21-orange)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3-green)
-![License](https://img.shields.io/badge/License-MIT-blue)
-
 ---
 
 ## Features
