@@ -1,0 +1,17 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: mock-ai-photo-generator
+
+app:
+  image:
+    storage-path: ./generated-images
+  jwt:
+    secret: ${JWT_SECRET:myDefaultSecretKeyThatIsAtLeast32Bytes!!}
+    expiration: ${JWT_EXPIRATION:86400000}
+
+logging:
+  level:
+    com.mockai: DEBUG

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Photo Generator</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">&#x1F3A8;</span>
+                <h1>AI Photo Generator</h1>
+            </div>
+            <div class="header-actions">
+                <span class="badge" id="imageCount">0 images</span>
+                <button class="btn btn-icon" id="themeToggle" title="Toggle theme">&#9790;</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Generation Panel -->
+        <section class="generate-panel">
+            <div class="panel-header">
+                <h2>Generate Images</h2>
+            </div>
+
+            <form id="generateForm" class="generate-form">
+                <div class="form-group">
+                    <label for="prompt">Describe your image</label>
+                    <div class="textarea-wrapper">
+                        <textarea
+                            id="prompt"
+                            name="prompt"
+                            rows="3"
+                            placeholder="e.g., A serene mountain landscape at sunset with golden light filtering through clouds..."
+                            required
+                            minlength="3"
+                            maxlength="500"
+                        ></textarea>
+                        <button type="button" class="copy-prompt-btn" id="copyPromptBtn" title="Copy prompt to clipboard" style="display:none;">&#128203;</button>
+                    </div>
+                    <div class="char-count"><span id="charCount">0</span>/500</div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="size">Size</label>
+                        <select id="size" name="size">
+                            <option value="1024x1024">1024 x 1024 (Square)</option>
+                            <option value="1792x1024">1792 x 1024 (Landscape)</option>
+                            <option value="1024x1792">1024 x 1792 (Portrait)</option>
+                            <option value="512x512">512 x 512 (Small)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="style">Style</label>
+                        <select id="style" name="style">
+                            <option value="vivid">Vivid</option>
+                            <option value="natural">Natural</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quality">Quality</label>
+                        <select id="quality" name="quality">
+                            <option value="standard">Standard</option>
+                            <option value="hd">HD</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-generate" id="generateBtn">
+                    <span class="btn-text">&#10024; Generate Image</span>
+                    <span class="btn-loading" style="display:none;">
+                        <span class="spinner"></span> Generating...
+                    </span>
+                </button>
+            </form>
+
+            <!-- Prompt Suggestions -->
+            <div class="suggestions">
+                <p class="suggestions-label">Try these prompts:</p>
+                <div class="suggestion-chips">
+                    <button class="chip" data-prompt="A golden retriever playing in autumn leaves">🐕 Golden Retriever</button>
+                    <button class="chip" data-prompt="Modern minimalist office space with natural lighting">🏢 Office Space</button>
+                    <button class="chip" data-prompt="Tropical beach at sunset with palm trees">🌅 Tropical Sunset</button>
+                    <button class="chip" data-prompt="Close-up of fresh vegetables on a wooden cutting board">🥗 Fresh Vegetables</button>
+                    <button class="chip" data-prompt="Abstract geometric patterns in vibrant colors">🎨 Abstract Art</button>
+                    <button class="chip" data-prompt="Cozy coffee shop interior with warm lighting">☕ Coffee Shop</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="gallery-section">
+            <div class="gallery-header">
+                <h2>Gallery</h2>
+                <div class="search-box">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search images by prompt..."
+                        autocomplete="off"
+                    >
+                    <button class="btn btn-icon" id="searchBtn" title="Search">&#128269;</button>
+                    <button class="btn btn-icon" id="clearSearchBtn" title="Clear" style="display:none;">&#10005;</button>
+                </div>
+            </div>
+
+            <div id="gallery" class="gallery-grid">
+                <!-- Images will be loaded here -->
+            </div>
+
+            <!-- Skeleton Loading Cards -->
+            <div id="skeletonGrid" class="gallery-grid" style="display:none;">
+                <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text"></div><div class="skeleton-text short"></div></div>
+                <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text"></div><div class="skeleton-text short"></div></div>
+                <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text"></div><div class="skeleton-text short"></div></div>
+                <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text"></div><div class="skeleton-text short"></div></div>
+            </div>
+
+            <div id="emptyState" class="empty-state">
+                <div class="empty-icon">&#128444;</div>
+                <h3>No images yet</h3>
+                <p>Generate your first AI-generated image above!</p>
+            </div>
+
+            <div id="loadingGallery" class="loading-state" style="display:none;">
+                <span class="spinner large"></span>
+                <p>Loading gallery...</p>
+            </div>
+
+            <div id="noResults" class="empty-state" style="display:none;">
+                <div class="empty-icon">&#128270;</div>
+                <h3>No results found</h3>
+                <p>Try a different search term</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Preview Modal -->
+    <div id="previewModal" class="modal" style="display:none;">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-image-container">
+                <img id="modalImage" src="" alt="Preview">
+            </div>
+            <div class="modal-info">
+                <p class="modal-prompt" id="modalPrompt"></p>
+                <div class="modal-meta">
+                    <span id="modalSize"></span>
+                    <span id="modalStyle"></span>
+                    <span id="modalProvider"></span>
+                    <span id="modalDate"></span>
+                </div>
+                <div class="modal-actions">
+                    <a id="modalDownload" href="" download class="btn btn-primary">
+                        &#11015; Download Image
+                    </a>
+                    <button id="modalDelete" class="btn btn-danger">
+                        &#128465; Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Drag & Drop Overlay -->
+    <div id="dropOverlay" class="drop-overlay" style="display:none;">
+        <div class="drop-content">
+            <div class="drop-icon">&#128228;</div>
+            <p>Drop your prompt text here</p>
+        </div>
+    </div>
+
+    <!-- Generating Skeleton (shown during image generation) -->
+    <div id="generatingSkeleton" class="generating-overlay" style="display:none;">
+        <div class="generating-card">
+            <div class="skeleton-img large"></div>
+            <div class="generating-text">
+                <span class="spinner"></span>
+                Generating your image...
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
