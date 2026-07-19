@@ -200,3 +200,4 @@ app:
 ## 📄 License
 
 MIT License
+# stock-photo-generator
